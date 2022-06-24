@@ -1,0 +1,117 @@
+{% load staticfiles %}
+{% include 'head.html' %}
+{% include 'base.html' %}
+{% load widget_tweaks %}
+<main>
+
+                
+                <section class="listing-wrap">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="filter-results">
+          <div class="title">
+            <h4>Search the results</h4>
+          </div>
+          <div class="content">
+            <form method="get">
+              <div class="form-group">
+                {{ filter.form.apartment_type.label_tag }}
+                {% render_field filter.form.apartment_type class="form-control" %}
+              </div>
+              <div class="form-group">
+                {{ filter.form.location.label_tag }}
+              {% render_field filter.form.location class="form-control" %}
+              </div>
+              <!-- <div class="form-group anchor-list">
+                <label>Bedrooms</label>
+                <a href="#">Studio</a>
+                <a href="#">1</a>
+                <a href="#">2</a>
+                <a href="#">3+</a>
+              </div> -->
+              <div class="form-group">
+                {{ filter.form.internet.label_tag }}
+        {% render_field filter.form.internet class="form-control" %}
+              </div>
+              <div class="form-group">
+                            {{ filter.form.rent.label_tag }}
+              {% render_field filter.form.rent class="form-control" %}
+              </div>
+                            <button type="submit" class="btn-hover-left"><span>Submit</span></button>
+            </form>         
+          </div>
+          </div>
+      <!--  {% for user in filter.qs %}
+         {{ user.apartment_type }}
+          {{ user.location }}
+         {{ user.internet }}
+         {{ user.rent }}
+
+      {% endfor %}
+           -->
+        <!-- /.filter-results -->
+      </div><!-- /.col-sm-3 -->
+      <div class="col-sm-9">
+        <div class="apartment-list">
+          <h2>Available Apartments</h2>
+          <div class="pagination-wrap clearfix">  
+          
+                </div>
+                
+          
+          <div class="row">
+          {% for filter in filter.qs %}
+            <div class="col-sm-6 col-md-4" ">
+              <div class="apartment" >
+                <div class="item">
+                  <div class="top">
+                    <a href="{% url 'apartmentapp:apartment_detail' filter.pk %}">
+                    {% for image in filter.apartmentimage_set.all %}
+                      {% if forloop.first %}
+
+                    <img src="{{ image.apartment_image.url }}" alt="">
+                    {% endif %}
+                        {% endfor %}
+                    </a>
+                  </div>
+                    
+                  <div class="bottom">
+                    <h3 class="address"><a href="#">{{ filter.location |upper }}</a></h3>
+                    <h5>{{ filter.area }} sq feet</h5>
+                    <a href="#" class="add-to-fav"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+                  </div>
+                  <div class="price">
+                    <h4><a href="#">${{ filter.rent }}</a></h4>
+                  </div>
+                </div><!-- /.item -->
+              </div>
+              <!-- /.apartment -->
+            </div>
+           {% empty %}
+        
+          <h1 style="text-align: center;">No data</h1>
+        
+       
+     
+            <!-- /.col-sm-6.col-md-4 -->
+            <!--  -->
+          
+          {% endfor %}
+          
+
+
+        </div>
+        
+        <!-- /.apartment-list -->
+        <!-- /.pagination-wrap.clearfix -->
+      </div><!-- /.col-sm-9 -->
+    </div>
+  </div></div>
+</section><!-- /section.listing-wrap -->
+</main>
+{% include 'footer.html' %}
+</footer>
+
+</body>
+</html>

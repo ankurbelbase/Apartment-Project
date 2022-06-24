@@ -1,0 +1,16 @@
+.apartment {
+  margin-top: 1em;
+}
+
+.favorite {
+  cursor: pointer;
+}
+
+.favorite:hover {
+  color: #f0ad4e;
+}
+
+.favorited {
+  color: #f0ad4e; 
+}
+

@@ -1,0 +1,243 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title></title>
+<!--fonts-->
+<!--/.fonts-->
+
+<!-- Stylesheets -->
+<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'fonts/fonts.css' %}">
+<link href="{% static 'css/style.css' %}" rel="stylesheet">
+<link href="{% static 'css/bootcamp.css' %}" rel="stylesheet">
+<link href="{% static 'css/notifications.css' %}" rel="stylesheet">
+<link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+<link href="{% static 'css/profile.css' %}" rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
+
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="{% static 'js/jquery-3.1.0.min.js' %}"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
+<script src="{% static 'js/bootcamp.js' %}"></script>
+<script src="{% static 'js/notifications.js' %}"></script>
+<script src="{% static 'js/likes.js' %}"></script>
+
+</head>
+<body class="inner-page">
+<header class="main-header">
+	<div class="container">
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="/"><img src="{% static 'images/logo.png' %}" alt="Single Pager"></a>
+				</div>
+
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="{% url 'inbox' %}">Inbox</a></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="{% url 'authentication:logout' %}">Logout</a></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="{% url 'profile' user.username %}">{{ user.username }}</a></li>
+					</ul>
+				</div><!-- /.navbar-collapse -->
+			</div><!-- /.container-fluid -->
+		</nav>
+	</div>
+</header>
+<main>
+<div>
+{% if user.is_authenticated %} 
+   <div class="collapse navbar-collapse" id="menu">
+   <ul class="nav navbar-nav">
+                <li>
+                  <a href="#" id="notifications" data-container="body" data-toggle="popover" data-placement="bottom" title="Notifications">
+                    <span class="glyphicon glyphicon-bell"></span>
+                  </a>
+                </li>
+                
+              </ul>
+              {%  endif %}
+              </div>
+	<div class="container">
+		<section class="signup-wrap">
+			<div class="page-title">
+				<h1>Account</h1>
+			</div><!-- /.page-title -->
+			<div class="page-content">
+				<div class="row">
+					<div class="col-sm-10 col-sm-offset-1">
+						<div class="row">
+							<div class="col-sm-5">
+			                    
+			                        <img src="{{ profile.profile.get_picture }}" class="img-circle" width="304" height="236" alt="">
+			                    <div class="row profile" profile-id="{{ profile.id }}">
+									    {% csrf_token %}
+									    <!-- {{profile.profile.get_likers}} -->
+									    <div class="col-md-1 options">
+									    {% if user.username != profile.username %}
+									      {% if user in profile.profile.get_likers %}
+									        <span class="glyphicon glyphicon-heart like liked" title="Click to unlike this profile; click again to toggle"></span>
+									      {% else %}
+									        <span class="glyphicon glyphicon-heart-empty like" title="Click to like this profile; click again to toggle"></span>
+									      {% endif %}
+									      <span class="like-count">{{ profile.profile.likes }}</span>
+									    {% endif %}
+									    </div>
+									</div>
+			                </div>
+			                <div class="col-sm-7">
+			                	<div class="edit-profile">
+			                		
+				                    	<h3>Account</h3>
+				                        <ul>
+				                            <li>
+				                                    <i class="fa fa-user" aria-hidden="true"></i> {{ profile.get_username }}
+				                            </li>
+				                            <li>
+				                                    <i class="fa fa-user" aria-hidden="true"></i> {{ profile.profile.get_screen_name }} 
+				                    	</ul>
+				                    	<h3>Contact</h3>
+				                    	<ul>
+				                    		<li>
+				                                    <i class="fa fa-envelope" aria-hidden="true"></i> {{ profile.email }} 
+				                            </li>
+				                            <li>
+				                                    <i class="fa fa-phone" aria-hidden="true"></i> {{ profile.profile.phone }} 
+				                            </li>
+				                            <li>
+				                                    <i class="fa fa-location-arrow" aria-hidden="true"></i> {{ profile.profile.location }} 
+				                            </li>
+				                    	</ul>
+				                    	<h3>Job</h3>
+				                    	<ul>
+				                    		<li>
+				                                    <i class="fa fa-tasks" aria-hidden="true"></i> {{ profile.profile.job }}
+				                            </li>
+				                    	</ul>
+				                    	<h3>Bio</h3>
+				                    	<ul>
+				                    		<li>
+				                                    <i class="fa fa-tasks" aria-hidden="true"></i> {{ profile.profile.bio }}
+				                            </li>
+				                    	</ul>
+				                    	<h3>Age</h3>
+				                    	<ul>
+				                    		<li>
+				                                    <i class="fa fa-birthday-cake" aria-hidden="true"></i> {{ profile.profile.age }}
+				                            </li>
+				                    	</ul>
+				                    	<h3>Gender</h3>
+				                    	<ul>
+				                    		<li>
+				                    		 <i class="fa fa-venus-mars" aria-hidden="true"></i> {{ profile.profile.gender }}
+				                        
+				                            </li>
+				                    	</ul>
+				                    	
+				                    	{% if user.is_authenticated %}
+									{% if user.username == profile.username %}
+				                    	<div class="btn-wrap">
+				                    		<a href="{% url 'userprofile:profilesettings' %}"><button type="submit" class="btn-hover-left">Edit</button></a>
+				                    	</div>
+				                   
+				                   	{% endif %}
+				                   	{% endif %}
+			                    </div><!-- /.edit-info -->
+			                </div>
+						</div>
+					</div><!-- /.col-sm-8.col-sm-offset-2 -->
+				</div>
+			</div><!-- /.page-content -->
+		</section><!-- /section.signup-wrap -->
+	</div>
+</main>
+
+<footer class="main-footer">
+	<div class="top-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="footer-widget">
+						<div class="logo-wrap">
+							<a href="/"><img src="{% static 'images/logo-footer.png' %}" alt=""></a>
+						</div>
+						<p>Nunc tincidunt enim ac sapien porta congue. Nulla mi sapien, feugiat eget feugiat sed, pharetra vitae est.</p>
+					</div><!-- /.footer-widget -->
+				</div><!-- /.col-sm-4 -->
+				<div class="col-sm-4">
+					<div class="footer-widget">
+						<h4>Company</h4>
+						<ul>
+							<li>
+								<a href="#">About Us</a>
+							</li>
+							<li>
+								<a href="#">Terms & Policies</a>
+							</li>
+							<li>
+								<a href="#">Apartments</a>
+							</li>
+							<li>
+								<a href="#">Partnership</a>
+							</li>
+						</ul>
+					</div><!-- /.footer-widget -->
+				</div><!-- /.col-sm-4 -->
+				<div class="col-sm-4">
+					<div class="footer-widget">
+						<h4>Get Connected</h4>
+						<p><a href="tel:0123456789">0123456789</a></p>
+						<p><a href="mailto:info@example.com">info@example.com</a></p>
+						<ul class="social-links">
+							<li>
+								<a href="#" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+							</li>
+							<li>
+								<a href="#" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+							</li>
+							<li>
+								<a href="#" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+							</li>
+							<li>
+								<a href="#" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+							</li>
+						</ul>
+					</div><!-- /.footer-widget -->
+				</div><!-- /.col-sm-4 -->
+			</div>
+		</div>
+	</div><!-- /.top-footer -->
+	<div class="bottom-footer">
+		<div class="container">
+			<div class="copyright-wrap">
+				<p>© Copyright 2017 - <a href="#">BitsInnovatin Pvt. Ltd.</a></p>
+			</div>
+		</div>
+	</div><!-- /.bottom-footer -->
+</footer>
+					
+</body>
+</html>

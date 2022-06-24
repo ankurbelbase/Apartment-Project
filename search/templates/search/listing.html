@@ -1,0 +1,132 @@
+{% load staticfiles %}
+{% include 'head.html' %}
+
+{% load widget_tweaks %}
+<main>
+{% if results %}
+{% include 'base.html' %}
+<section class="listing-wrap">
+	<div class="container">
+		<div class="row">			
+			<div class="col-sm-12">				
+                <div class="apartment-list">
+					<h2 style="text-align: center;font-size:50px;">Available Apartments</h2>
+					<div class="pagination-wrap clearfix">  
+					
+                </div>
+					
+					<div class="row">
+					{% for city in results %}
+					
+						<div class="col-md-4" >
+							<div class="apartment" >
+								<div class="item">
+									<div class="top">
+										<a href="{% url 'apartmentapp:apartment_detail' city.pk %}">
+										{% for image in city.apartmentimage_set.all %}
+			     	 					{% if forloop.first %}
+
+										<img src="{{ image.apartment_image.url }}" alt="">
+										{% endif %}
+			     	   					{% endfor %}
+										</a>
+									</div>										
+									<div class="bottom">
+										<h3 class="address"><a href="#">{{ city.location |upper }}</a></h3>
+										<h5>{{ city.area }}</h5>
+										<a href="#" class="add-to-fav"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+									</div>
+									<div class="price">
+										<h4><a href="#">${{ city.rent }}</a></h4>
+									</div>
+								</div><!-- /.item -->
+							</div>
+							<!-- /.apartment -->							
+						</div>
+						<!-- /.col-sm-6.col-md-4 -->					
+					{% endfor %}
+					</div>
+					{% else %}
+					
+					<header class="main-header">
+  <div class="container">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/"><img src="{% static 'images/logo.png' %}" alt="Single Pager"></a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+          <li>
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                     Browse By
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{% url 'filter:apfilter' %}">Apartment</a></li>
+                    <li><a href="{% url 'userprofile:network' %}">User Profile</a></li>
+                  </ul>
+                </li>
+          {% if user.is_authenticated %} 
+           <li><a href="{% url 'profile' user.username %}">{{ user.username | upper }}</a></li>
+          
+          <li><a href="{% url 'authentication:logout' %}">Logout</a></li>
+         {% else %}
+   
+            <li><a href="#">How it Works</a></li>
+            <li><a href="{% url 'authentication:signup' %}">Sign up</a></li>
+            <li><a href="{% url 'authentication:login' %}">Log in</a></li>
+            {% endif %}
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+  </div>
+</header>
+				<main class="home-page">
+				<section class="banner-block image-overlay" style="background-image:url({% static 'images/banner1.jpeg' %})">
+  					<div class="container">
+    					<div class="row">
+      						<div class="col-sm-10 col-sm-offset-1">
+        						<div class="search-box">
+          						<h2>No Apartment Matches Your Query</h2>
+
+          						<!-- form  -->
+          						<form role='search' action="{% url 'search:search' %}" method="get">
+            						<div class="form-group">
+              						<input id="id_name" type="text" class="form-control input-lg" name="name" placeholder="search for city, area">
+              						<button class="marker"><i class="fa fa-location-arrow" aria-hidden="true"></i></button>
+              						<button type="submit" class="search-btn btn-orange"><i class="fa fa-search" aria-hidden="true"></i></button>
+            					</div>
+          						</form>
+          						<!-- /form -->
+        					</div><!-- /.search-box -->
+      					</div>
+    				</div>
+  				</div>
+  
+			</section><!-- /.banner-block -->
+		</main>
+				</div>
+				{% endif %}
+				<!-- /.apartment-list -->
+				<!-- /.pagination-wrap.clearfix -->
+			</div><!-- /.col-sm-9 -->
+		</div>
+	
+
+</section><!-- /section.listing-wrap -->
+</main>
+{% include 'footer.html' %}
+</footer>
+
+</body>
+</html>

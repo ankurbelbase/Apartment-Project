@@ -1,0 +1,62 @@
+{% load staticfiles %}
+{% include 'head.html' %}
+{% include 'base.html' %}
+<main>
+<div class="container">
+    <section class="signup-wrap">
+      <div class="page-title">
+        <h1>Signup for Apartment</h1>
+      </div><!-- /.page-title -->
+      <div class="page-content">
+        <div class="row">
+          <div class="col-sm-8 col-sm-offset-3">
+            <form action="" method="post">
+            {% csrf_token %}
+              <div class="row">
+              {{ form.non_field_errors }}
+               {{ form.username.errors }}
+                <div class="col-sm-8">
+                  <div class="form-group">             
+                    <label for="{{ form.username.id_for_label }}">User Name:</label>
+                    {{ form.username }}
+                  </div>
+                </div>
+                {{ form.email.errors }}
+                <div class="col-sm-8">
+                  <div class="form-group">                    
+                <label for="{{ form.email.id_for_label }}">Your Email:</label>
+                  {{ form.email }}
+                  </div>
+                </div>                
+               {{ form.password.errors }}
+                <div class="col-sm-8">
+                  <div class="form-group">                    
+                   <label for="{{ form.password.id_for_label }}">Password:</label>
+                    {{ form.password }}
+                  </div>
+                </div>
+                <div class="col-sm-8">
+                  <div class="form-group">
+                    {{ form.confirm_password.errors }}
+    <label for="{{ form.confirm_password.id_for_label }}">Repeat Password:</label>
+    {{ form.confirm_password }}
+                  </div>
+                </div>
+               <div class="col-sm-8">
+                  <div class="form-group">
+<div class="g-recaptcha" data-sitekey="6LcuvhsUAAAAAM4plK_rjo3iHd6egkr6EkYxSX9N"></div>
+                  </div>
+                  </div>                
+              </div>
+              <button class="btn-hover-left">Submit</button>
+            </form>
+          </div><!-- /.col-sm-6 -->
+        </div>
+      </div><!-- /.page-content -->
+    </section><!-- /section.signup-wrap -->
+  </div>
+</main>
+{% include 'footer.html' %}          
+</body>
+<script src='https://www.google.com/recaptcha/api.js'></script>
+</html>

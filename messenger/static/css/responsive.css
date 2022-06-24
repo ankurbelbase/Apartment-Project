@@ -1,0 +1,9 @@
+/*=========================================
+			Responsive Style
+===========================================*/
+
+@media only screen and (min-width:1290px){
+.container{
+	width:1260px;
+}
+}

@@ -1,0 +1,142 @@
+{% load staticfiles %}
+{% include 'head.html' %}
+{% include 'base.html' %}
+
+<!-- static files for favorite -->
+<link href="{% static 'css/notifications.css' %}" rel="stylesheet">
+<link href="{% static 'css/apartment.css' %}" rel="stylesheet">
+<script src="{% static 'js/notifications.js' %}"></script>
+<script src="{% static 'js/apartment.js' %}"></script>
+<!-- /static file  -->
+
+<main>
+<section class="apartment-slider">
+	<div class="container">		
+		<div class="row">
+			<div class="col-sm-8">
+			
+				<div class="slider">
+				{% for image in apartment.apartmentimage_set.all %}
+					<div class="single-slide">
+						<div class="img-wrap">
+							<img src = "{{ image.apartment_image.url }}" alt="">
+						</div>
+					</div><!-- /.single-slide -->
+					{% endfor %}<!-- /.single-slide -->
+				</div><!-- /.slider -->
+				
+				<div class="slider-nav">
+				{% for image in apartment.apartmentimage_set.all %}
+					<div class="single-nav">
+						<div class="img-wrap">
+							<img src="{{ image.apartment_image.url }}" alt="">
+						</div>
+					</div>
+					{% endfor %}
+					</div>
+					<!-- /.single-nav -->
+					
+				<div class="apartment-description">
+					<h4>Amenities</h4>
+					{% for object in objects %}
+					<ul>
+						<li>{{ object.furnished }}</li>
+						<li>{{ object.water_supply }}</li>
+						<li>Bed-Room:{{ object.bedroom }}</li>
+					</ul>
+					<h4>Description</h4>
+					<p>{{ object.description }}</p>
+					
+
+				</div><!-- /.apartment-description -->
+			</div><!-- /.col-sm-8 -->
+			<div class="col-sm-4">
+				<div class="info-block" id="info-dialog">
+					<div class="top">
+						<h2>{{ object.rent }}</h2>
+						<h4>{{ object.location | upper }}</h4>
+						
+						<ul>
+							<li>
+								<img src="{%static 'images/bed.png' %}" alt="">{{ object.bedroom }}
+							</li>
+							<li>
+								<img src="{%static 'images/bath.png' %}" alt="">{{ object.bathroom }} 
+							</li>
+							<li>
+								<img src="{% static 'images/home.png' %}" alt="">{{ object.area }}
+
+							</li>
+						</ul>
+					</div><!-- /.top -->
+					{% endfor %}
+					<div class="bottom">
+						<div class="btn-wrap">
+							<a href="#" class="btn-orange"><i class="fa fa-phone" aria-hidden="true"></i> Show Number</a>
+							<a href="#" class="btn-orange"><i class="fa fa-envelope-o" aria-hidden="true"></i> Email Landlord</a>
+						</div>
+
+
+						<!-- get favorite -->
+						<div class="row apartment" apartment-id="{{ apartment.id }}">
+						{% csrf_token %}
+
+    <div class="col-md-1 options">
+    {% if user.username != apartment.user.username %}
+      {% if user in apartment.get_favoriters %}
+        <span class="glyphicon glyphicon-star favorite favorited" title="Click to unmark this apartment as favorite; click again to toggle"></span>
+      {% else %}
+        <span class="glyphicon glyphicon-star-empty favorite" title="Click to mark this apartment as favorite; click again to toggle"></span>
+      {% endif %}
+      <span class="favorite-count">{{ apartment.favorites }}</span>
+    {% else %}
+    	<center>Favorites: {{ apartment.favorites }}</center>
+    {% endif %}
+    </div>
+</div>
+<!-- /get favorite  -->
+						<a href="#" class="fav-btn"><i class="fa fa-heart-o" aria-hidden="true"></i> Save to Favorites</a>
+					</div><!-- /.bottom -->
+				</div><!-- /.info-block -->
+			</div><!-- /.col-sm-4 -->
+		</div>
+
+	</div>
+</section><!-- /section.apartment-slider -->
+<section class="related-listing">
+	<div class="container">
+		<h3>Similar Apartments</h3>
+        <div class="row">
+        {% for image in apartment.apartmentimage_set.all %}
+        
+            <div class="col-sm-4 col-md-3">
+                <div class="apartment">
+                    <div class="item">
+                        <div class="top">
+                            <a  href="{% url 'apartmentapp:apartment_detail' apartment.pk %}">
+                            <img src="{{ image.apartment_image.url }}"  alt=""></a>
+                        </div>
+                        <div class="bottom">
+                            <h3 class="address"><a href="#">{{ object.location |upper }}</a></h3>
+                            <h5>Bed-Room : {{ object.bedroom }}</h5>
+                        </div>
+                        <div class="price">
+                            <h4><a href="#">{{ object.rent }}</a></h4>
+                        </div>
+                    </div><!-- /.item -->
+                </div><!-- /.apartment -->
+            </div>
+            
+            {% endfor %}<!-- /.col-sm-4.col-md-3 -->
+            
+                    </div><!-- /.item -->
+                </div><!-- /.apartment -->
+            </div><!-- /.col-sm-4.col-md-3 -->
+        </div>
+	</div>
+</section><!-- /section.related-listing -->
+</main>
+{% include 'footer.html' %}
+
+</body>
+</html>

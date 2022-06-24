@@ -1,0 +1,92 @@
+{% load staticfiles %}
+<!-- Stylesheets -->
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'fonts/fonts.css' %}">
+<link href="{% static 'css/slick.css' %}" rel="stylesheet">
+<link href="{% static 'css/slick-theme.css' %}" rel="stylesheet">
+<link href="{% static 'css/style.css' %}" rel="stylesheet">
+<link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+<link href="{% static 'css/messages.css' %}" rel="stylesheet">
+
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<!-- <script src = "https:/ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.typeahead.bundle.js' %}"></script>
+<script src="{% static 'js/slick.min.js' %}"></script>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>New Message</title>
+<!--fonts-->
+<!--/.fonts-->
+</head>
+
+<body class="inner-page">
+<header class="main-header">
+  <div class="container">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/"><img src="{% static 'images/logo.png' %}" alt="Single Pager"></a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <img src="{{user.profile.get_picture}}" alt=""> {{ user.username }}
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{% url 'inbox' %}"></a>Inbox</li>
+                    <li><a href="{% url 'userprofile:profilesettings' %}">Settings</a></li>
+                    <li><a href="{% url 'authentication:logout' %}">Sign out</a></li>
+                  </ul>
+                </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+  </div>
+</header>
+
+
+
+<section>
+
+<form  method="post" action="{% url 'new_message' %}">
+    {% csrf_token %}
+    <div class="form-group">
+    <br><br>
+      <label for="to" class = "col-sm-1 control-label">To</label><br>     
+        <input class="form-control typeahead" type="text" id="to" name="to"></div><br><br>
+      <div class = "form-group"> 
+      <label for="to" class = "col-sm-1 control-label">Message</label><br>
+      <div class = "col-sm-11">
+        <textarea class="form-control" id="message" name="message" placeholder="Write a message" rows="4" cols="50"></textarea>
+      </div>
+      <div class = 'form-group'>
+        <div class="col-sm-11 col-sm-offset-1">
+        <button type="submit" class="btn btn-primary">Send</button>
+        </div>
+        </div>
+</form>
+<script src="{% static 'js/messages.typehead.js' %}"></script>
+</section>
+

@@ -1,0 +1,21 @@
+{% load i18n %}
+{% for conversation in conversations %}
+
+<div class="tab-wrap clearfix">
+<ul class="nav nav-tabs" role="tablist">
+<li>
+	    	<a href="{% url 'messages' conversation.user.username %}" aria-controls="home" role="tab" data-toggle="tab" width="40" height="40">
+	    		<span class="left">
+	    		<a href="{% url 'messages' conversation.user.username %}">
+	    			<img src="{{conversation.user.profile.get_picture}}" alt="" width="40" height="40">
+	    		
+	    		<span class="right">
+	    			<span class="name">{{ conversation.user.username }}</span></a>
+	    			</span>
+	    		
+		    </a>
+		    </span>
+		</li>
+		</ul>
+		</div>
+{% endfor %}
